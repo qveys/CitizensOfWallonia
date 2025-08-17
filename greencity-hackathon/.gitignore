@@ -1,0 +1,92 @@
+# Fichiers de configuration locale
+.env
+.env.local
+.env.*.local
+config.json
+sdkconfig
+sdkconfig.old
+
+# Dépendances
+## Node.js
+node_modules/
+packages/
+package-lock.json
+yarn.lock
+.pnp/
+.pnp.js
+
+## Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+pip-log.txt
+.python-version
+
+## .NET
+bin/
+obj/
+
+# Fichiers de build
+dist/
+build/
+out/
+*.exe
+*.bin
+*.elf
+*.hex
+
+# Données sensibles ou volumineuses
+*.csv
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
+mongodb/
+influxdb/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.*~
+*.bak
+*.tmp
+*.temp
+
+# Fichiers IDE
+.idea/
+.vscode/
+.vs/
+*.swp
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Logs et debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+
+# Tests et couverture
+coverage/
+.nyc_output/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Notebooks
+.ipynb_checkpoints
+*.ipynb 
