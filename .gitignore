@@ -404,37 +404,6 @@ $RECYCLE.BIN/
 .Trash-*
 .nfs*
 
-# Project specific
-*.zip
-*.tar.gz
-*.rar
-*.7z
-*.ppt
-*.pptx
-*.doc
-*.docx
-*.xls
-*.xlsx
-*.pdf
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.ico
-*.mp4
-*.avi
-*.mov
-*.wmv
-*.flv
-*.webm
-*.m4a
-*.mp3
-*.wav
-*.flac
-*.aac
-*.ogg
-
 # Connection strings and sensitive data
 ConnectionString.txt
 *.env
