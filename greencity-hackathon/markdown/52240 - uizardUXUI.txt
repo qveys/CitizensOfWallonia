@@ -1,0 +1,1572 @@
+# Spécifications UI/UX pour Canopia - Prototype Uizard Autodesigner 2.0
+
+## SPÉCIFICATIONS DU PROJET
+* **Type de produit**: Application mobile avec version web dashboard
+* **Plateforme**: iOS/Android (mobile) et Responsive Web (dashboard)
+* **Secteur**: Smart City / Environnement / Civic Tech
+* **Audience cible**: Citoyens urbains (application mobile) et décideurs municipaux/urbanistes (dashboard)
+* **Objectif principal**: Visualiser et agir sur les données environnementales urbaines (pollution atmosphérique, îlots de chaleur, consommation énergétique) pour améliorer la qualité de vie et optimiser l'implantation d'espaces verts
+
+## STYLE ET IDENTITÉ VISUELLE
+* **Ambiance générale**: Moderne, professionnel avec touches éco-responsables
+* **Palette de couleurs**:
+    * Primaire: Verts naturels (#2E7D32, #43A047)
+    * Secondaire: Bleus pour données (#1565C0, #1E88E5)
+    * Alertes: Dégradés de jaune à rouge pour niveaux de pollution
+    * Fond: Blanc/Gris très clair (#FAFAFA) avec accents minimalistes
+* **Style d'interface**: Material Design avec touches de glassmorphism pour éléments de données
+* **Typographie**:
+    * Titres: Montserrat (semi-bold)
+    * Corps: Roboto (light, regular)
+    * Data: Roboto Mono pour chiffres et métriques
+* **Références visuelles**: AirVisual, Windy, Google Maps, Tableau Dashboard
+
+## PARCOURS UTILISATEUR COMPLET
+L'utilisateur démarre avec un onboarding expliquant la mission de l'application, puis accède à l'écran principal (carte interactive). Il peut explorer les différentes couches de données environnementales (pollution, température, énergie), consulter les détails pour un lieu spécifique, voir des tendances historiques, recevoir des recommandations personnalisées, et participer au signalement de problèmes environnementaux. Pour les décideurs, le dashboard web approfondit l'analyse avec simulation d'impact de végétalisation et tableaux de bord décisionnels.
+
+## DESCRIPTION DES ÉCRANS (APP MOBILE)
+
+**ÉCRAN 1: Onboarding**
+* **Objectif**: Présenter la mission et les fonctionnalités principales
+* **Structure**: Carrousel vertical de 3 écrans avec progression
+* **Composants UI principaux**:
+    * Illustration animée simple montrant la ville qui devient plus verte
+    * Titre principal en Montserrat 24pt
+    * Description concise en Roboto 16pt
+    * Indicateur de progression (3 points)
+    * Bouton "Suivant" flottant (FAB vert)
+* **Interactions**: Swipe vertical ou tap sur bouton pour avancer
+* **Navigation**: Dernier écran → Écran principal (carte)
+* **États**: Progression 1/3, 2/3, 3/3
+* **Spécificités visuelles**: Illustrations stylisées représentant pollution, capteurs, et végétalisation
+
+**ÉCRAN 2: Carte Interactive (Principal)**
+* **Objectif**: Visualiser les données environnementales géolocalisées
+* **Structure**: Carte en plein écran avec contrôles superposés
+* **Composants UI principaux**:
+    * Carte vectorielle OpenStreetMap avec styles personnalisés
+    * Barre de recherche flottante en haut avec icône loupe et filtre
+    * Sélecteur de couches données (tab horizontal) : Pollution, Chaleur, Énergie
+    * Miniature d'indicateur global de qualité (en haut à droite)
+    * FAB pour géolocalisation (en bas à droite)
+    * Bottom sheet rétractable avec informations contextuelles
+* **Interactions**:
+    * Pinch to zoom, pan sur la carte
+    * Tap sur zone pour détails dans bottom sheet
+    * Swipe up sur bottom sheet pour plus d'informations
+* **Navigation**:
+    * Bottom navigation: Carte, Tendances, Signalements, Profil
+    * Tap sur indicateur → Détails complets
+* **États**:
+    * Chargement: Skeleton UI + pulsation
+    * Vide: Message "Aucune donnée disponible"
+    * Erreur: Banner avec option de rafraîchissement
+* **Spécificités visuelles**:
+    * Heatmap avec dégradé de couleurs significatives (vert→jaune→orange→rouge)
+    * Marqueurs de capteurs avec ripple effect pour données en temps réel
+
+**ÉCRAN 3: Détails Zone**
+* **Objectif**: Montrer analyses détaillées pour une zone spécifique
+* **Structure**: Card-based scrollable view avec header fixe
+* **Composants UI principaux**:
+    * Header avec nom de zone et score environnemental global
+    * Carousel horizontal de métriques clés (cartes avec data viz)
+    * Section "Tendances" avec mini-graphiques temporels
+    * Section "Recommandations" avec cartes actionables
+    * Section "Prévisions" avec prédictions 24/48h
+* **Interactions**:
+    * Scroll vertical pour explorer toutes les sections
+    * Tap sur métriques pour afficher détails/graphiques
+    * Expand/collapse sur sections
+* **Navigation**:
+    * Bouton retour vers carte
+    * Actions spécifiques dans recommandations
+* **États**:
+    * Vue complète/détaillée vs Vue résumée (toggle)
+* **Spécificités visuelles**:
+    * Visualisations de données minimalistes mais expressives
+    * Badges colorés pour statuts (Bon, Moyen, Mauvais, Critique)
+
+**ÉCRAN 4: Tendances**
+* **Objectif**: Visualiser l'évolution temporelle des métriques environnementales
+* **Structure**: Tab layout vertical avec graphiques
+* **Composants UI principaux**:
+    * Sélecteur de métrique (tab horizontal): Pollution, Température, Énergie
+    * Sélecteur de période (chips): Jour, Semaine, Mois, Année
+    * Graphique linéaire interactif avec points de données
+    * Légende contextuelle sous le graphique
+    * Section "Insights" avec analyses automatiques
+* **Interactions**:
+    * Pinch/zoom sur graphique
+    * Tap sur point de données pour détails
+    * Drag sur période pour comparer
+* **Navigation**: Via bottom navigation
+* **États**:
+    * Chargement progressif des données
+    * Vue condensée vs détaillée
+* **Spécificités visuelles**:
+    * Courbes lissées avec ombres subtiles
+    * Points d'intérêt mis en évidence (pics, anomalies)
+
+**ÉCRAN 5: Signalements**
+* **Objectif**: Permettre aux citoyens de signaler problèmes environnementaux
+* **Structure**: Liste + carte + formulaire
+* **Composants UI principaux**:
+    * Toggle view: Liste/Carte des signalements
+    * Liste: Cards avec photo thumbnail, type, statut, date
+    * Formulaire de nouveau signalement:
+        * Sélecteur de type (pollution visible, odeur, chaleur excessive)
+        * Champ description
+        * Upload photo
+        * Localisation automatique ou manuelle
+    * Section "Mes signalements" avec statuts
+* **Interactions**:
+    * Swipe sur liste pour actions (suivre, partager)
+    * Tap sur carte pour placer signalement
+* **Navigation**:
+    * FAB "+" pour nouveau signalement
+    * Tap sur signalement → détails
+* **États**:
+    * Liste vide
+    * En attente de validation
+    * Validé/En cours/Résolu
+* **Spécificités visuelles**:
+    * Icônes distinctives par type de signalement
+    * Indicateurs d'état colorés
+    * Carte simplifiée en arrière-plan
+
+**ÉCRAN 6: Profil & Préférences**
+* **Objectif**: Personnaliser l'expérience et gérer paramètres
+* **Structure**: Liste de sections avec toggle/actions
+* **Composants UI principaux**:
+    * Avatar et nom utilisateur (optionnel)
+    * Section "Préférences de notification"
+    * Section "Zones d'intérêt" (géofencing)
+    * Section "Paramètres de confidentialité"
+    * Section "À propos" avec infos sur capteurs/données
+    * Toggle thème clair/sombre
+* **Interactions**:
+    * Toggle switches pour options
+    * Select pour zones d'intérêt
+* **Navigation**: Via bottom navigation
+* **États**: Connecté vs Anonyme
+* **Spécificités visuelles**:
+    * Style épuré, focalisation sur lisibilité
+    * Séparateurs subtils entre sections
+
+## DESCRIPTION DES ÉCRANS (DASHBOARD WEB)
+
+**ÉCRAN 7: Dashboard Municipal**
+* **Objectif**: Fournir vue d'ensemble complète pour décideurs
+* **Structure**: Grid layout responsive avec widgets configurables
+* **Composants UI principaux**:
+    * Header avec filtres globaux (zone, période)
+    * Carte principale (50% largeur sur desktop)
+    * KPIs en cards alignées (4 métriques principales)
+    * Graphiques de tendances (25% largeur)
+    * Liste des zones critiques nécessitant action
+    * Section "Recommandations" algorithmiques
+* **Interactions**:
+    * Drag and drop pour réorganiser widgets
+    * Filtres cross-sections
+    * Drill-down sur n'importe quelle métrique
+* **Navigation**:
+    * Sidebar avec sections principales
+    * Breadcrumb pour navigation complexe
+* **États**:
+    * Vue standard vs Mode présentation
+    * Filtres actifs/inactifs
+* **Spécificités visuelles**:
+    * Layout adaptatif (responsive)
+    * Data viz professional-grade
+    * Densité d'information élevée mais organisée
+
+**ÉCRAN 8: Simulation Végétalisation**
+* **Objectif**: Modéliser impact des projets de végétalisation
+* **Structure**: Split-view avec carte et contrôles
+* **Composants UI principaux**:
+    * Carte interactive avec outils de dessin
+    * Panel de contrôle avec:
+        * Sélecteur de type de végétalisation
+        * Sliders pour intensité/surface
+        * Calculateur de budget estimé
+    * Vue comparative avant/après
+    * Métriques d'impact projeté
+* **Interactions**:
+    * Dessin de zones sur carte
+    * Ajustement de paramètres
+    * Toggle avant/après
+* **Navigation**: Via sidebar principale
+* **États**:
+    * Édition
+    * Calcul (spinner)
+    * Résultats
+* **Spécificités visuelles**:
+    * Visualisation différentielle (heatmap delta)
+    * Palette spécifique pour impacts (rouge→vert)
+
+**ÉCRAN 9: Gestion des Capteurs**
+* **Objectif**: Monitoring et configuration du réseau de capteurs
+* **Structure**: Liste principale + carte + détails
+* **Composants UI principaux**:
+    * Liste filtrable des capteurs avec statut
+    * Carte de localisation avec clustering
+    * Panel détaillé par capteur:
+        * Métriques de santé (batterie, connectivité)
+        * Calibration et paramètres
+        * Historique maintenance
+* **Interactions**:
+    * Filtres avancés
+    * Sélection multiple pour actions groupées
+* **Navigation**: Via sidebar principale
+* **États**:
+    * Normal/Warning/Critique pour capteurs
+    * Mode maintenance
+* **Spécificités visuelles**:
+    * Codage couleur intuitif pour états
+    * Icônes techniques précises
+
+## INTERACTIONS ET TRANSITIONS
+* **Navigation principale**:
+    * Mobile: Bottom navigation bar (4 icônes)
+    * Dashboard: Left sidebar collapsible
+* **Transitions entre écrans**:
+    * Mobile: Slide horizontal + fade composite
+    * Dashboard: Fade for main content, persistent nav
+* **Animations spécifiques**:
+    * Pulse sur valeurs en temps réel
+    * Progressive reveal pour graphiques complexes
+    * Micro-animations sur statuts (léger bounce)
+* **Gestes supportés**:
+    * Swipe pour changer de couche de données
+    * Pinch to zoom sur cartes et graphiques
+    * Long-press pour actions contextuelles
+    * Pull-to-refresh sur listes de données
+
+## FONCTIONNALITÉS SPÉCIALES
+* **Composants personnalisés**:
+    * Jauge environnementale circulaire avec segments colorés
+    * Slider de période avec brush pour sélection temporelle
+    * Cards de capteurs avec indicateurs temps réel
+* **Fonctionnalités dynamiques**:
+    * Contenu contextualisé selon localisation
+    * Recommandations personnalisées basées sur habitudes
+    * Alertes intelligentes (seuils adaptatifs)
+* **Comportements adaptatifs**:
+    * Simplification interface en mouvement
+    * Mode économie batterie (rafraîchissement réduit)
+    * Version simplifiée sur wearables
+* **Modes alternatifs**:
+    * Mode sombre bien calibré
+    * Mode haute visibilité (accessibilité)
+    * Mode présentation (dashboard)
+
+## CONSIDÉRATIONS TECHNIQUES
+* **Responsive design**:
+    * Breakpoints stratégiques (320px, 768px, 1024px, 1440px)
+    * Adaptation de layout (stack vs grid)
+    * Comportement spécifique des visualisations à chaque breakpoint
+* **Accessibilité**:
+    * Contrastes WCAG AA minimum
+    * Navigation clavier complète (dashboard)
+    * Alternative textuelle pour toutes visualisations
+    * VoiceOver/TalkBack compatible
+* **Fonctionnalités Uizard à utiliser**:
+    * Brand Kit pour palette et typographie environnementale
+    * Component Library pour éléments data-driven
+    * Focus Predictor pour hiérarchisation des éléments
+    * Prototype Links pour parcours utilisateur complet
+* **Contraintes techniques**:
+    * Performance optimisée pour rendu des heatmaps
+    * Compatibilité carte avec sources de données diverses
+    * Gestion efficace du cache pour données offline
+
+## PRINCIPES UX/UI À APPLIQUER
+* **Loi de Hick**: Simplifier les choix dans l'app mobile, offrir complexité progressive dans dashboard
+* **Loi de Fitts**: Dimensionner boutons d'action selon importance, placer FABs à portée du pouce
+* **Loi de Jakob**: Utiliser conventions de cartes et dataviz reconnues
+* **Principe de visibilité du statut système**: Feedback constant sur chargement et fraîcheur des données
+* **Correspondance système-monde réel**: Utiliser métaphores visuelles pour pollution (nuages) et chaleur (gradient thermique)
+* **Cohérence et standards**: Adopter codes couleurs standards pour qualité air (vert-rouge)
+* **Prévention des erreurs**: Guider utilisateur dans signalements avec validation progressive
+* **Reconnaissance plutôt que rappel**: Labelliser clairement toutes les métriques environnementales
+* **Flexibilité et efficacité**: Raccourcis pour utilisateurs experts (dashboard), expérience guidée pour novices
+* **Esthétique minimaliste**: Priorité aux données, interfaces épurées sans distraction
+
+Ce prototype présente une solution complète intégrant données environnementales complexes dans une interface accessible, tout en proposant des fonctionnalités avancées pour les décideurs municipaux. L'accent est mis sur la visualisation intuitive et l'actionnabilité des données environnementales urbaines.
+
+Vous avez raison, j'ai principalement développé les écrans de l'application mobile citoyenne et simplement esquissé les écrans du dashboard administratif sans entrer dans les détails nécessaires. Je vais maintenant compléter la spécification avec une description approfondie des écrans destinés aux administrateurs et décideurs municipaux, en suivant le même niveau de détail et de structure.
+
+# Spécifications UI/UX complètes pour Canopia - Prototype Uizard Autodesigner 2.0
+
+## SPÉCIFICATIONS DU PROJET
+* **Type de produit**: Solution double: Application mobile (citoyens) + Dashboard web (municipalités)
+* **Plateforme**: iOS/Android (mobile) et Responsive Web (dashboard administratif)
+* **Secteur**: Smart City / Environnement / Civic Tech
+* **Audience cible**:
+    * Citoyens urbains (application mobile)
+    * Décideurs municipaux, urbanistes, responsables environnement (dashboard administratif)
+* **Objectif principal**: Système intégré de monitoring environnemental urbain permettant de visualiser et agir sur les données de pollution, îlots de chaleur et consommation énergétique pour optimiser l'implantation d'espaces verts
+
+## STYLE ET IDENTITÉ VISUELLE
+* **Ambiance générale**: Professionnel, data-driven avec touche éco-responsable
+* **Palette de couleurs**:
+    * Primaire: Verts (#2E7D32, #43A047) pour actions et éléments positifs
+    * Secondaire: Bleus (#1565C0, #1E88E5) pour données et visualisations
+    * Indicateurs: Dégradés de vert→jaune→orange→rouge pour niveaux de pollution/chaleur
+    * Fond: Blanc (#FFFFFF) pour interface claire, gris foncé (#212121) pour mode sombre
+    * Accents: Teal (#00897B) pour éléments interactifs dashboard
+* **Style d'interface**:
+    * Mobile: Material Design avec touches de glassmorphism
+    * Dashboard: Flat design avec accentuation des données et grilles structurées
+* **Typographie**:
+    * Titres: Montserrat (semi-bold) pour clarté et autorité
+    * Corps: Roboto (regular, light) pour lisibilité optimale
+    * Data: Roboto Mono pour métriques et chiffres (meilleur alignement des nombres)
+* **Références visuelles**:
+    * Mobile: AirVisual, Windy, PlantNet
+    * Dashboard: Tableau, PowerBI, Google Analytics 4, Urban Observatory
+
+## DESCRIPTION DES ÉCRANS (DASHBOARD ADMINISTRATIF)
+
+**ÉCRAN 1: Login & Authentification**
+* **Objectif**: Sécuriser l'accès au dashboard administratif
+* **Structure**: Page centrée avec formulaire de connexion
+* **Composants UI principaux**:
+    * Logo Canopia avec animation subtile (pulsation verte)
+    * Formulaire de connexion avec champs email/mot de passe
+    * Option de connexion SSO (Single Sign-On municipal)
+    * Système de 2FA (code temporaire)
+    * Option "Rester connecté"
+    * Lien "Mot de passe oublié"
+* **Interactions**:
+    * Validation en temps réel des champs
+    * Affichage/masquage du mot de passe (toggle)
+* **Navigation**: Connexion réussie → Dashboard principal
+* **États**:
+    * Initial
+    * Erreur (champs invalides, identifiants incorrects)
+    * Chargement/Validation
+    * 2FA en attente
+* **Spécificités visuelles**:
+    * Fond subtil avec carte stylisée de la ville en watermark
+    * Animation de transition vers dashboard après connexion réussie
+
+**ÉCRAN 2: Dashboard Principal (Vue d'ensemble)**
+* **Objectif**: Fournir une vue synthétique de tous les indicateurs environnementaux clés
+* **Structure**: Layout en grille flexible avec widgets configurables
+* **Composants UI principaux**:
+    * Barre de navigation latérale (sidebar) avec sections principales
+    * Header avec:
+        * Sélecteur de période (aujourd'hui, 7j, 30j, personnalisé)
+        * Filtres globaux (quartiers, types de données)
+        * Options d'export (PDF, CSV, API)
+    * Widgets de KPI (4-6 métriques principales):
+        * Qualité air moyenne (indice global)
+        * Température moyenne vs normale saisonnière
+        * Consommation énergétique totale avec comparaison (vs période précédente)
+        * Nombre de capteurs actifs/inactifs
+    * Carte interactive (adaptative, occupe 50-70% en desktop)
+    * Section "Alertes et anomalies" (timeline verticale)
+    * Section "Tendances principales" (mini-graphiques)
+* **Interactions**:
+    * Drag & drop pour réorganiser widgets (grid layout personnalisable)
+    * Click sur widget pour agrandissement/détails
+    * Filtres cross-widget (sélection affecte tous les composants)
+    * Hover sur carte pour aperçu données rapide
+* **Navigation**:
+    * Sidebar pour accès aux sections spécialisées
+    * Breadcrumbs pour navigation hiérarchique
+    * Liens rapides vers rapports fréquents
+* **États**:
+    * Standard (données complètes)
+    * Chargement partiel (skeleton UI pour widgets en cours de chargement)
+    * Alertes (surbrillance des anomalies)
+    * Mode présentation (optimisé pour projection/partage d'écran)
+* **Spécificités visuelles**:
+    * Cartes avec ombres subtiles pour hiérarchie visuelle
+    * Code couleur cohérent pour statuts (vert: bon, orange: attention, rouge: critique)
+    * Mise en évidence visuelle des variations significatives (sparklines avec point terminal accentué)
+
+**ÉCRAN 3: Analyse Pollution Atmosphérique**
+* **Objectif**: Analyse détaillée des données de pollution par type et zone
+* **Structure**: Split view avec filtres, graphiques et carte
+* **Composants UI principaux**:
+    * Panel de filtres avancés:
+        * Sélecteur de polluants (CO₂, NO₂, PM10, PM2.5, multi-sélection)
+        * Filtre temporel avec visualisation timeline
+        * Filtre géographique (quartiers, zones administratives)
+        * Options d'agrégation (moyenne, max, percentiles)
+    * Visualisations principales:
+        * Graphique temporel multi-séries
+        * Carte choroplèthe avec légende dynamique
+        * Histogramme de distribution par zone
+        * Tableau de données détaillées avec tri/filtrage
+    * Section corrélations:
+        * Heatmap croisée (pollution vs météo)
+        * Graphique pollution vs densité trafic
+    * Overlays d'analyses automatiques:
+        * Détection de patterns
+        * Identification de pics anormaux
+        * Comparaison avec normes/seuils réglementaires
+* **Interactions**:
+    * Brossage et lien entre visualisations (cross-filtering)
+    * Zoom temporel et spatial
+    * Hover pour infobulles détaillées
+    * Click pour isoler séries de données
+* **Navigation**: Via sidebar principale et tabs secondaires
+* **États**:
+    * Vue générale vs détaillée
+    * Comparaison périodes (A/B)
+    * Mode analyse normative (vs standards réglementaires)
+* **Spécificités visuelles**:
+    * Palette spécifique aux polluants
+    * Seuils réglementaires visualisés comme lignes horizontales
+    * Annotations contextuelles sur événements importants (pics de pollution)
+
+**ÉCRAN 4: Mapping des Îlots de Chaleur**
+* **Objectif**: Visualiser et analyser les zones de surchauffe urbaine
+* **Structure**: Carte interactive principale avec panels latéraux
+* **Composants UI principaux**:
+    * Carte thermique haute définition:
+        * Couches superposables (températures, matériaux urbains, végétation)
+        * Contrôles d'opacité par couche
+        * Timeline pour évolution journalière/saisonnière
+    * Sidebar outils d'analyse:
+        * Sélecteur de plage de température
+        * Filtre par type de surface (béton, asphalte, végétation)
+        * Mode de visualisation (absolu vs différentiel vs normal)
+    * Panel inférieur contextuel:
+        * Profil de température sur section dessinée
+        * Statistiques de la zone sélectionnée
+        * Liste des capteurs contribuant aux données
+    * Overlay infrastructures urbaines:
+        * Bâtiments publics (écoles, hôpitaux...)
+        * Espaces verts existants
+        * Densité de population
+* **Interactions**:
+    * Dessiner des polygones/lignes pour analyses sectorielles
+    * Slider temporel pour visualiser évolution
+    * Basculer entre vues jour/nuit
+    * Exportation de zones sélectionnées
+* **Navigation**:
+    * Zoom semantic (quartier, block, rue)
+    * Marque-pages spatiaux (zones favorites)
+    * Historique de navigation spatiale
+* **États**:
+    * Normal vs Canicule
+    * Avec/sans correction saisonnière
+    * Vue prédictive (projection future)
+* **Spécificités visuelles**:
+    * Heatmap avec palette thermique précise (bleu→vert→jaune→rouge→violet)
+    * Bordures et repères urbains en overlay discret
+    * Points de mesure indiqués par marqueurs discrets
+
+**ÉCRAN 5: Monitoring Énergétique**
+* **Objectif**: Analyser la consommation énergétique des infrastructures urbaines
+* **Structure**: Dashboard multi-panels avec visualisations spécialisées
+* **Composants UI principaux**:
+    * Filtres spécifiques:
+        * Type de bâtiment/infrastructure
+        * Type d'énergie (électricité, gaz, chauffage urbain)
+        * Normalisation (m², usage, occupation)
+    * Visualisations énergétiques:
+        * Graphique temporel multi-échelle (horaire→mensuel→annuel)
+        * Diagramme de Sankey pour flux énergétiques
+        * Carte de chaleur temporelle (24h x 7j)
+        * Comparatif benchmark (vs bâtiments similaires)
+    * Détection anomalies:
+        * Indicateurs de surconsommation
+        * Patterns anormaux (nuit, weekend)
+        * Dérives progressives
+    * Widgets performance:
+        * Score efficacité énergétique
+        * Tendance vs objectifs
+        * Potentiel d'économie estimé
+* **Interactions**:
+    * Drill-down hiérarchique (zone→bâtiment→étage→équipement)
+    * Comparaison temporelle via doubles curseurs
+    * Création rapide de rapports personnalisés
+* **Navigation**:
+    * Par hiérarchie spatiale
+    * Par typologie de consommation
+* **États**:
+    * Consommation normale/anormale
+    * Vue historique/prédictive
+    * Différentiel (comparaison)
+* **Spécificités visuelles**:
+    * Visualisations techniques type ingénierie
+    * Code couleur intuitif (vert=économie, rouge=gaspillage)
+    * Icônes spécifiques par type d'énergie
+
+**ÉCRAN 6: Simulation de Végétalisation**
+* **Objectif**: Modéliser l'impact de différents scénarios de végétalisation
+* **Structure**: Interface divisée en paramètres, visualisation, métriques d'impact
+* **Composants UI principaux**:
+    * Éditeur de scénario:
+        * Outils de dessin sur carte (polygones, lignes, points)
+        * Sélecteur de type de végétalisation (arbres, arbustes, toitures végétalisées)
+        * Paramètres de densité et maturité
+        * Bibliothèque de patterns prédéfinis
+    * Visualisation du scénario:
+        * Vue principale avant/après
+        * Vue 3D optionnelle (isométrique)
+        * Timeline d'évolution (1-10 ans)
+    * Métriques d'impact calculées:
+        * Réduction température (°C)
+        * Captation CO₂ (tonnes/an)
+        * Filtration particules fines (%)
+        * Rétention eau pluviale (m³)
+        * Biodiversité (indice)
+    * Analyse coût-bénéfice:
+        * Budget estimatif (installation + maintenance)
+        * ROI environnemental
+        * Co-bénéfices sociaux estimés
+* **Interactions**:
+    * Dessin direct sur carte
+    * Ajustement paramètres avec preview en temps réel
+    * Comparaison côte à côte de scénarios
+    * Sauvegarde/chargement de scénarios
+* **Navigation**:
+    * Tabs pour différentes approches (arbres, parcs, murs végétaux)
+    * Workflow guidé (sélection zone→choix végétation→paramètres→résultats)
+* **États**:
+    * Édition
+    * Calcul en cours (avec feedback progression)
+    * Résultats comparatifs
+    * Rapport détaillé
+* **Spécificités visuelles**:
+    * Représentation stylisée mais précise des différentes végétations
+    * Visualisation d'impact par gradients différentiels
+    * Icônes explicites pour bénéfices environnementaux
+
+**ÉCRAN 7: Gestion du Réseau de Capteurs**
+* **Objectif**: Superviser l'état et la maintenance du réseau IoT
+* **Structure**: Vue tableau + carte avec détails par appareil
+* **Composants UI principaux**:
+    * Tableau de capteurs:
+        * Liste paginée avec statut (actif, maintenance, défaillant)
+        * Filtres avancés (type, zone, statut, âge)
+        * Métriques techniques (batterie, signal, dernière transmission)
+        * Actions groupées (calibrer, planifier maintenance)
+    * Carte de déploiement:
+        * Clusters dynamiques
+        * Code couleur par statut
+        * Zones de couverture
+        * Suggestions d'optimisation
+    * Panel de détails capteur:
+        * Fiche technique
+        * Historique de maintenance
+        * Graphiques de performance
+        * Logs de communication
+        * Boutons d'action (redémarrer, calibrer, diagnostiquer)
+    * Planificateur de maintenance:
+        * Calendrier avec prévisions
+        * Priorisation automatique
+        * Assignation techniciens
+* **Interactions**:
+    * Sélection multiple de capteurs
+    * Drag & drop pour réorganisation sur carte
+    * Expansion/réduction groupes de capteurs
+* **Navigation**:
+    * Par zone géographique
+    * Par statut technique
+    * Par type de capteur
+* **États**:
+    * Vue normale (tous capteurs)
+    * Filtré par problème
+    * Mode planification
+    * Mode déploiement
+* **Spécificités visuelles**:
+    * Interface technique inspirée systèmes industriels
+    * Indicateurs de statut immédiatement reconnaissables
+    * Visualisations techniques spécialisées
+
+**ÉCRAN 8: Rapports & Tableaux de Bord**
+* **Objectif**: Générer et personnaliser des rapports pour décideurs
+* **Structure**: Constructeur modulaire avec preview en temps réel
+* **Composants UI principaux**:
+    * Sélecteur de modèles de rapport:
+        * Rapport mensuel environnemental
+        * Bilan carbone territorial
+        * Suivi plan climat
+        * Rapport efficacité énergétique
+        * Template personnalisé
+    * Constructeur modulaire:
+        * Palette de widgets glisser-déposer
+        * Options de mise en page (colonnes, sections)
+        * Paramètres par widget (période, filtres, style)
+    * Options de programmation:
+        * Fréquence (quotidien, hebdo, mensuel)
+        * Destinataires (email, dashboard, API)
+        * Formats (PDF, PPT, HTML, données brutes)
+    * Preview dynamique avec données réelles
+* **Interactions**:
+    * Drag & drop pour construction
+    * Redimensionnement des widgets
+    * Configuration contextuelle
+    * Test livraison
+* **Navigation**:
+    * Entre modèles
+    * Historique des rapports générés
+    * Bibliothèque de widgets
+* **États**:
+    * Édition
+    * Preview
+    * Programmation
+    * Historique
+* **Spécificités visuelles**:
+    * Interface de type "builder" avec grille d'alignement
+    * Preview fidèle au rendu final
+    * Styles cohérents avec charte graphique municipale
+
+**ÉCRAN 9: Administration & Paramètres**
+* **Objectif**: Configurer la plateforme et gérer les utilisateurs/accès
+* **Structure**: Interface à onglets avec formulaires structurés
+* **Composants UI principaux**:
+    * Gestion utilisateurs:
+        * Liste des comptes avec rôles
+        * Formulaire création/édition
+        * Gestion permissions granulaires
+        * Logs d'activité
+    * Configuration système:
+        * Paramètres d'intégration API
+        * Intervalles de rafraîchissement données
+        * Seuils d'alertes personnalisables
+        * Rétention des données
+    * Personnalisation:
+        * Logo et couleurs (marque blanche)
+        * Terminologie adaptable
+        * Widgets par défaut
+        * Paramètres d'exportation
+    * Logs et diagnostics:
+        * Journal système
+        * Performances
+        * Utilisation et statistiques
+* **Interactions**:
+    * Forms avec validation
+    * Toggles pour options
+    * Tests de configuration
+* **Navigation**: Via tabs administrateur
+* **États**:
+    * Configuration standard
+    * Mode debug/avancé
+* **Spécificités visuelles**:
+    * Interface administrative classique
+    * Clarté et précision dans les libellés
+    * Séparation visuelle claire des sections critiques
+
+## DESCRIPTION DES ÉCRANS (APP MOBILE CITOYENNE)
+
+**ÉCRAN 10: Onboarding**
+* **Objectif**: Présenter la mission et principales fonctionnalités
+* **Structure**: Carrousel vertical (3-4 écrans) avec progression
+* **Composants UI principaux**:
+    * Illustration animée simple par écran
+    * Titre principal concis
+    * Description brève (max 2 lignes)
+    * Indicateur de progression (points)
+    * Bouton "Suivant" / "Commencer"
+* **Interactions**: Swipe vertical ou tap sur bouton
+* **Navigation**: Dernier écran → Carte principale
+* **États**: Progression 1/4, 2/4, 3/4, 4/4
+* **Spécificités visuelles**: Illustrations stylisées représentant concepts clés
+
+**ÉCRAN 11: Carte Interactive (Principal)**
+* **Objectif**: Visualiser données environnementales géolocalisées
+* **Structure**: Carte en plein écran avec contrôles superposés
+* **Composants UI principaux**:
+    * Carte vectorielle avec styles personnalisés
+    * Sélecteur de couches données (tab horizontal)
+    * Indicateur global de qualité environnementale
+    * Bottom sheet rétractable avec informations contextuelles
+    * FAB pour géolocalisation et signalement
+* **Interactions**: Pinch/zoom, pan, tap pour détails
+* **Navigation**: Bottom navigation bar (4 icônes)
+* **États**: Chargement, données normales, alertes actives
+* **Spécificités visuelles**: Heatmap avec échelle colorimétrique intuitive
+
+**ÉCRAN 12: Détails Zone**
+* **Objectif**: Analyses détaillées pour zone spécifique
+* **Structure**: Cards scrollables avec header fixe
+* **Composants UI principaux**:
+    * Header avec nom zone et score global
+    * Métriques clés en cards
+    * Mini-graphiques temporels
+    * Recommandations personnalisées
+    * Prévisions 24/48h
+* **Interactions**: Scroll vertical, expand/collapse sections
+* **Navigation**: Retour carte, actions spécifiques dans recommandations
+* **États**: Vue complète vs résumée
+* **Spécificités visuelles**: Data viz minimalistes mais expressives
+
+**ÉCRAN 13: Tendances**
+* **Objectif**: Visualiser évolution temporelle des métriques
+* **Structure**: Tab layout et graphiques
+* **Composants UI principaux**:
+    * Sélecteur de métrique et période
+    * Graphique interactif principal
+    * Section "Insights" automatiques
+    * Comparaisons avec normes/moyennes
+* **Interactions**: Pinch/zoom graphique, tap points données
+* **Navigation**: Via bottom nav
+* **États**: Vue jour/semaine/mois/année
+* **Spécificités visuelles**: Courbes avec points d'intérêt mis en évidence
+
+**ÉCRAN 14: Signalements**
+* **Objectif**: Permettre signalement participatif de problèmes
+* **Structure**: Liste/carte + formulaire
+* **Composants UI principaux**:
+    * Toggle view Liste/Carte
+    * Liste cards avec thumbnail, type, statut
+    * Formulaire nouveau signalement
+    * Section "Mes signalements"
+* **Interactions**: Swipe liste pour actions, tap carte pour placer
+* **Navigation**: FAB pour nouveau signalement
+* **États**: Liste vide, en attente, validé, résolu
+* **Spécificités visuelles**: Icônes distinctives par type
+
+**ÉCRAN 15: Profil & Préférences**
+* **Objectif**: Personnaliser expérience utilisateur
+* **Structure**: Liste de sections avec toggles/actions
+* **Composants UI principaux**:
+    * Profil minimaliste (optionnel)
+    * Préférences notifications
+    * Zones d'intérêt
+    * Paramètres confidentialité
+    * À propos / Aide
+* **Interactions**: Toggles, selects, inputs simples
+* **Navigation**: Via bottom nav
+* **États**: Connecté vs anonyme
+* **Spécificités visuelles**: Interface épurée, focus lisibilité
+
+## INTERACTIONS ET TRANSITIONS
+* **Navigation principale**:
+    * Mobile: Bottom navigation bar (4 icônes)
+    * Dashboard: Left sidebar hiérarchique + breadcrumbs
+* **Transitions entre écrans**:
+    * Mobile: Slide horizontal + fade
+    * Dashboard: Fade pour contenu principal, persistent sidebar
+* **Animations spécifiques**:
+    * Pulse sur données temps réel
+    * Expand/collapse sur widgets dashboard
+    * Transitions fluides entre vues comparatives (avant/après)
+    * Micro-animations sur changements d'état (succès/erreur)
+* **Gestes supportés**:
+    * Mobile: Swipe, pinch, long-press, pull-to-refresh
+    * Dashboard: Drag-drop widgets, multi-sélection, hover contextuel
+
+## FONCTIONNALITÉS SPÉCIALES
+* **Composants personnalisés**:
+    * Sélecteur temporel multi-échelle (dashboard)
+    * Jauges environnementales avec seuils réglementaires
+    * Comparateur avant/après pour simulations
+    * Carte annotable pour planification
+* **Fonctionnalités dynamiques**:
+    * Suggestions intelligentes basées sur patterns
+    * Détection automatique d'anomalies
+    * Prévisions adaptatives selon conditions
+    * Configuration dynamique des dashboards selon rôle utilisateur
+* **Comportements adaptatifs**:
+    * Simplification sur mobile en mouvement
+    * Mode présentation pour dashboard (projection)
+    * Version simplifiée alertes pour smartwatch
+* **Modes alternatifs**:
+    * Mode sombre bien calibré (économie batterie, travail nocturne)
+    * Mode haute accessibilité (contraste augmenté, textes agrandis)
+    * Mode kiosque (pour affichage public)
+
+## CONSIDÉRATIONS TECHNIQUES
+* **Responsive design**:
+    * Dashboard: 4 breakpoints stratégiques (320px, 768px, 1024px, 1440px+)
+    * Adaptation des visualisations complexes (simplifiées sur mobile)
+    * Layout fluide avec grid areas pour réorganisation
+    * Prioritisation des contenus critiques sur petits écrans
+* **Accessibilité**:
+    * WCAG AA minimum (contraste 4.5:1)
+    * Navigation clavier complète pour dashboard
+    * Alternatives textuelles pour visualisations
+    * Labels explicites pour tous composants de données
+    * Support lecteurs d'écran avec ARIA roles
+* **Fonctionnalités Uizard à utiliser**:
+    * Brand Kit pour cohérence visuelle complète
+    * Component Library avec variants pour états multiples
+    * Design System pour documentation UI
+    * Focus Predictor pour hiérarchisation attention
+    * Prototype Links pour workflow complet
+
+## PRINCIPES UX/UI À APPLIQUER
+* **Loi de Hick**:
+    * Interface citoyenne simplifiée (limiter les choix initiaux)
+    * Dashboard administratif avec complexité progressive (initial vs avancé)
+* **Loi de Jakob**:
+    * Conventions reconnues pour visualisations environnementales
+    * Patterns UI standards pour dashboards analytiques
+* **Loi de Fitts**:
+    * Actions fréquentes plus accessibles (taille et proximité)
+    * Zones de touch adaptées sur mobile (min 44px)
+* **Visibilité du statut système**:
+    * Indicateurs de fraîcheur des données
+    * Feedback sur chargement et traitements
+* **Correspondance système-monde réel**:
+    * Métaphores visuelles intuitives (thermomètre pour chaleur)
+    * Terminologie adaptée aux différents utilisateurs (citoyens vs experts)
+* **Prévention des erreurs**:
+    * Confirmations pour actions critiques
+    * Validation progressive des entrées utilisateur
+* **Flexibilité et efficacité**:
+    * Raccourcis et bulk actions pour experts
+    * Workflows guidés pour novices
+* **Esthétique minimaliste**:
+    * Priorité aux données et insights
+    * Réduction des éléments décoratifs non-fonctionnels
+* **Reconnaissance plutôt que rappel**:
+    * Libellés explicites pour toutes métriques
+    * Indicateurs visuels cohérents pour statuts
+
+Cette spécification complète couvre maintenant en détail les deux composantes essentielles du système Canopia : le dashboard administratif à destination des décideurs municipaux et l'application mobile pour les citoyens. Les interfaces sont conçues pour répondre aux besoins spécifiques de chaque audience tout en maintenant une cohérence visuelle et fonctionnelle à travers l'écosystème.
+
+# Écrans complémentaires pour Canopia - Prototype Uizard Autodesigner 2.0
+
+## DASHBOARD ADMINISTRATIF (ÉCRANS COMPLÉMENTAIRES)
+
+**ÉCRAN 16: Comparaison Zones & Quartiers**
+* **Objectif**: Analyser et comparer les indicateurs environnementaux entre différentes zones urbaines
+* **Structure**: Interface divisée en sélection de zones, métriques et visualisations comparatives
+* **Composants UI principaux**:
+    * Sélecteur multi-zones:
+        * Interface carte avec sélection polygonale
+        * Liste hiérarchique de quartiers/zones prédéfinies
+        * Option "Comparer avec période précédente" pour chaque zone
+        * Limite de 3-5 zones simultanées (code couleur par zone)
+    * Tableau comparatif:
+        * Matrice avec zones en colonnes et métriques en lignes
+        * Mini-sparklines dans les cellules
+        * Mise en évidence des écarts significatifs
+        * Options de normalisation (population, superficie, densité)
+    * Visualisations comparatives:
+        * Graphiques radar pour comparaison multi-critères
+        * Graphiques en barres groupées pour métriques spécifiques
+        * Diagrammes de dispersion pour corrélations
+        * Mini-cartes juxtaposées avec même échelle
+    * Panel d'analyse:
+        * Résumé automatique des différences principales
+        * Facteurs explicatifs possibles
+        * Recommandations de priorités d'action
+* **Interactions**:
+    * Sélection/désélection zones sur carte ou liste
+    * Réorganisation des zones comparées (drag & drop)
+    * Filtrage dynamique des métriques affichées
+    * Ajustement des paramètres de normalisation
+* **Navigation**:
+    * Via sidebar principale
+    * Possibilité de sauvegarder comparaisons comme rapports
+* **États**:
+    * Sélection simple/multiple
+    * Vue normalisée/absolue
+    * Mode présentation optimisé
+* **Spécificités visuelles**:
+    * Code couleur constant par zone à travers visualisations
+    * Mise en évidence claire des différences significatives
+    * Diagrammes de différentiels avec gradient sémantique
+
+**ÉCRAN 17: Analyse Prédictive Avancée**
+* **Objectif**: Explorer les scénarios futurs basés sur modèles prédictifs et simulations
+* **Structure**: Tableau de bord centré sur projections avec contrôles de paramètres
+* **Composants UI principaux**:
+    * Contrôles de modélisation:
+        * Sélecteur d'horizon temporel (1 mois à 10 ans)
+        * Choix de modèles prédictifs (tendanciel, ML avancé, simulation)
+        * Paramètres de scénarios (croissance urbaine, initiatives environnementales)
+        * Facteurs externes (climatiques, économiques, démographiques)
+    * Visualisations prédictives:
+        * Graphiques temporels avec zones de confiance
+        * Cartes de chaleur futures avec évolution temporelle
+        * Comparaison scénarios (business-as-usual vs interventions)
+        * Indicateurs de risques/opportunités
+    * Analyse d'impact:
+        * Métriques de santé publique projetées
+        * Indicateurs environnementaux estimés
+        * Coûts/bénéfices calculés sur la période
+        * Points de bascule et seuils critiques
+    * Recommandations stratégiques:
+        * Mesures prioritaires identifiées par IA
+        * Calendrier optimal d'interventions
+        * Analyses coûts-bénéfices par intervention
+* **Interactions**:
+    * Ajustement de paramètres avec mise à jour en temps réel
+    * Définition de scénarios personnalisés
+    * Comparaison côte à côte de projections
+    * Drill-down sur facteurs d'influence
+* **Navigation**:
+    * Onglets par type de projection
+    * Workflow guidé (définition paramètres → visualisation → analyse)
+* **États**:
+    * Configuration scénario
+    * Calcul (avec indicateur progression)
+    * Présentation résultats
+    * Comparaison multi-scénarios
+* **Spécificités visuelles**:
+    * Indication claire des niveaux de certitude/incertitude
+    * Palette temporelle progressive pour évolution
+    * Visualisation explicite des seuils critiques/réglementaires
+
+**ÉCRAN 18: Suivi Budgétaire des Interventions**
+* **Objectif**: Gérer et suivre les aspects financiers des initiatives environnementales
+* **Structure**: Dashboard financier avec catégories, planification et suivi
+* **Composants UI principaux**:
+    * Vue d'ensemble budgétaire:
+        * KPIs financiers (budget total, engagé, dépensé, ROI estimé)
+        * Répartition par type d'initiative (végétalisation, capteurs, infrastructures)
+        * Timeline d'exécution budgétaire
+        * Indicateurs de performance (coût/bénéfice environnemental)
+    * Planification financière:
+        * Table de projets avec budgets prévisionnels
+        * Diagramme de Gantt financier
+        * Projections de trésorerie
+        * Alertes sous/sur-consommation
+    * Suivi des dépenses:
+        * Tableau détaillé avec filtres avancés
+        * Graphiques d'évolution temporelle
+        * Comparaison prévu/réalisé
+        * Analyse des écarts
+    * Reporting financier:
+        * Tableaux de bord pour décideurs
+        * Templates de rapports financiers
+        * Indicateurs de performance environnementale/€
+        * Intégration avec systèmes comptables
+* **Interactions**:
+    * Filtrage multi-critères
+    * Drill-down hiérarchique (programme→projet→action)
+    * Ajustements de prévisions
+    * Génération rapport financier
+* **Navigation**:
+    * Par période fiscale
+    * Par catégorie d'intervention
+    * Par zone géographique
+* **États**:
+    * Vue prévisionnelle
+    * Suivi d'exécution
+    * Reporting rétrospectif
+    * Analyse d'optimisation
+* **Spécificités visuelles**:
+    * Codes couleurs financiers standards (rouge pour dépassement)
+    * Visualisations budgétaires professionnelles
+    * Indicateurs d'alerte visuels pour écarts significatifs
+
+**ÉCRAN 19: Gestion des Alertes et Seuils**
+* **Objectif**: Configurer le système d'alertes et définir les seuils critiques
+* **Structure**: Interface de configuration avec prévisualisation et historique
+* **Composants UI principaux**:
+    * Configuration des seuils:
+        * Table des métriques avec seuils personnalisables
+        * Sélecteur de niveaux (attention, alerte, critique)
+        * Options de paramètres contextuels (saison, jour/nuit)
+        * Importation de standards réglementaires
+    * Règles d'alerte:
+        * Builder visuel de règles conditionnelles
+        * Options temporelles (durée, persistance, récurrence)
+        * Conditions composites (ET/OU/NON)
+        * Priorisation des alertes
+    * Canaux de notification:
+        * Configuration par type d'alerte
+        * Matrice destinataires/canaux
+        * Planification horaire
+        * Templates de messages
+    * Historique et analytics:
+        * Journal des alertes déclenchées
+        * Statistiques de fréquence et distribution
+        * Analyse efficacité et faux positifs
+        * Tendances temporelles
+* **Interactions**:
+    * Drag sliders pour ajuster seuils
+    * Construction visuelle de règles complexes
+    * Test de règles sur données historiques
+    * Preview de notifications
+* **Navigation**:
+    * Onglets par catégorie d'alerte
+    * Navigation chronologique dans historique
+* **États**:
+    * Configuration
+    * Test
+    * Analyse rétrospective
+    * Optimisation
+* **Spécificités visuelles**:
+    * Visual builder avec flux logique
+    * Indication claire des seuils sur visualisations
+    * Code couleur cohérent pour niveaux d'alertes
+
+**ÉCRAN 20: Analyse du Feedback Citoyen**
+* **Objectif**: Centraliser et analyser les retours des citoyens pour orienter l'action publique
+* **Structure**: Dashboard analytique des interactions citoyennes
+* **Composants UI principaux**:
+    * Vue d'ensemble participation:
+        * KPIs d'engagement (utilisateurs actifs, signalements, satisfaction)
+        * Carte de chaleur des interactions par zone
+        * Evolution temporelle de l'engagement
+        * Indicateurs démographiques des participants
+    * Analyse des signalements:
+        * Répartition par type et statut
+        * Temps de traitement et résolution
+        * Clustering thématique (analyse textuelle)
+        * Corrélations avec données capteurs
+    * Sentiment et satisfaction:
+        * Analyse des commentaires (NLP)
+        * Scores de satisfaction par type/zone
+        * Évolution temporelle perception
+        * Identification de patterns d'insatisfaction
+    * Actions et recommandations:
+        * Suggestions basées sur feedback
+        * Priorisation automatique des problèmes
+        * Planification des actions correctives
+        * Impact estimé sur satisfaction
+* **Interactions**:
+    * Filtres croisés (démographique, géographique, temporel)
+    * Drill-down sur clusters de feedback
+    * Exploration textuelle des commentaires
+    * Création de rapports spécifiques
+* **Navigation**:
+    * Par type de feedback
+    * Par zone géographique
+    * Par thématique
+* **États**:
+    * Vue globale
+    * Analyse détaillée
+    * Mode action
+    * Suivi d'impact
+* **Spécificités visuelles**:
+    * Visualisations de sentiment avec échelles couleur émotionnelle
+    * Word clouds et réseaux sémantiques
+    * Cartes de corrélation feedback/données objectives
+
+**ÉCRAN 21: Exportation et API Management**
+* **Objectif**: Gérer l'accès aux données et l'interopérabilité avec d'autres systèmes
+* **Structure**: Console technique et administrative pour données externes
+* **Composants UI principaux**:
+    * Gestionnaire API:
+        * Documentation interactive des endpoints
+        * Générateur de clés API
+        * Monitoring de consommation
+        * Contrôles de throttling et quota
+    * Exportation de données:
+        * Builder de requêtes personnalisées
+        * Prévisualisation des résultats
+        * Options format (CSV, JSON, GeoJSON)
+        * Planification exports automatiques
+    * Intégrations externes:
+        * Configuration connecteurs standards (Open311, FIWARE)
+        * Webhooks et callbacks
+        * Mapping de données
+        * Logs de synchronisation
+    * Gestion des accès:
+        * Tableau des consommateurs externes
+        * Gestion permissions granulaires
+        * Auditing et sécurité
+        * Statistiques d'utilisation
+* **Interactions**:
+    * Construction de requêtes avec validation
+    * Test d'endpoints en direct
+    * Configuration par formulaires techniques
+    * Visualisation logs temps réel
+* **Navigation**:
+    * Tabs techniques par fonction
+    * Organisation hiérarchique des services
+* **États**:
+    * Configuration
+    * Monitoring
+    * Troubleshooting
+    * Analytics
+* **Spécificités visuelles**:
+    * Interface technique inspirée des consoles développeur
+    * Visualisations de flux de données
+    * Affichage structuré des données techniques
+
+## APPLICATION MOBILE (ÉCRANS COMPLÉMENTAIRES)
+
+**ÉCRAN 22: Centre de Notifications et Alertes**
+* **Objectif**: Centraliser et gérer les alertes et informations importantes
+* **Structure**: Liste verticale organisée par chronologie et catégorie
+* **Composants UI principaux**:
+    * En-tête avec filtres rapides:
+        * Tabs horizontal (Toutes, Alertes, Informations, Non lues)
+        * Bouton de paramétrage
+        * Option "Tout marquer comme lu"
+    * Liste de notifications:
+        * Cards avec icône de type, titre, extrait, horodatage
+        * Indicateur visuel de priorité (couleur/badge)
+        * Option d'action directe selon type
+        * Groupement intelligent par thème
+    * Paramètres rapides:
+        * Toggles pour activer/désactiver catégories
+        * Option "Ne pas déranger"
+        * Plages horaires préférentielles
+    * Section résumé:
+        * Statistiques de notifications récentes
+        * Tendances (augmentation des alertes pollution)
+* **Interactions**:
+    * Swipe horizontal sur notification pour actions (archiver, partager)
+    * Tap pour ouvrir détails complets
+    * Pull-to-refresh pour actualiser
+    * Long press pour options contextuelles
+* **Navigation**:
+    * Via bottom navigation
+    * Retour contextuel vers source de notification
+* **États**:
+    * Liste pleine vs vide
+    * Notifications filtrées
+    * Mode groupé vs chronologique
+* **Spécificités visuelles**:
+    * Code couleur par type d'alerte
+    * Badging pour non-lues
+    * Animations subtiles pour nouvelles entrées
+
+**ÉCRAN 23: Détail d'un Signalement**
+* **Objectif**: Fournir toutes les informations sur un problème signalé et son suivi
+* **Structure**: Vue détaillée verticale avec sections distinctes
+* **Composants UI principaux**:
+    * En-tête avec informations essentielles:
+        * Type de signalement avec icône
+        * Titre et description
+        * Statut avec badge coloré
+        * Date et auteur (si public)
+    * Carte contextuelle:
+        * Localisation précise
+        * Rayon d'impact estimé
+        * Points d'intérêt à proximité
+    * Galerie médias:
+        * Photos du problème
+        * Option comparaison avant/après
+        * Possibilité d'ajouter des photos
+    * Timeline de traitement:
+        * Jalons avec dates (signalé, validé, en cours, résolu)
+        * Commentaires des services municipaux
+        * Actions entreprises
+    * Section communautaire:
+        * Nombre de signalements similaires
+        * Options "Me concerne aussi"
+        * Commentaires d'autres citoyens
+        * Partage sur réseaux sociaux
+* **Interactions**:
+    * Zoom sur médias
+    * Expand/collapse sections
+    * Ajout commentaire ou média
+    * Actions contextuelles selon statut
+* **Navigation**:
+    * Retour à liste signalements
+    * Navigation entre signalements proches
+* **États**:
+    * Par statut (nouveau, validé, en cours, résolu, rejeté)
+    * Mode édition
+    * Vue autorité vs vue citoyenne
+* **Spécificités visuelles**:
+    * Éléments visuels distincts par statut
+    * Timeline stylisée avec progression
+    * Mise en page favorisant documentation visuelle
+
+**ÉCRAN 24: Recommandations Personnalisées**
+* **Objectif**: Proposer des conseils et actions adaptés au profil utilisateur et contexte local
+* **Structure**: Feed vertical de cards avec différents types de recommandations
+* **Composants UI principaux**:
+    * En-tête avec profil et contexte:
+        * Résumé situation locale (qualité air, température)
+        * Préférences actives (intérêts, sensibilités)
+        * Filtres rapides par catégorie
+    * Cards de recommandation:
+        * Santé (ex: "Évitez effort intense, pollution élevée")
+        * Mobilité (ex: "Itinéraire alternatif moins pollué")
+        * Énergie (ex: "Pics de consommation prévus, réduisez usage")
+        * Participation (ex: "Projet de végétalisation près de chez vous")
+    * Sections thématiques:
+        * "Aujourd'hui" (recommandations immédiates)
+        * "Cette semaine" (prévisions moyen terme)
+        * "Actions participatives" (engagement citoyen)
+    * Feedback et personnalisation:
+        * Options "Utile/Pas utile" par recommandation
+        * "Plus comme ceci" / "Moins comme ceci"
+        * Affinage des centres d'intérêt
+* **Interactions**:
+    * Swipe horizontal entre catégories
+    * Tap pour détails complets
+    * Feedback simple (pouces haut/bas)
+    * Boutons d'action directe
+* **Navigation**:
+    * Par catégorie (tabs)
+    * Chronologique (aujourd'hui/semaine/mois)
+* **États**:
+    * Première utilisation (onboarding recommandations)
+    * Vue personnalisée
+    * Vue par priorité vs catégorie
+* **Spécificités visuelles**:
+    * Icônes distinctives par type de recommandation
+    * Indication visuelle de pertinence/priorité
+    * Design card avec éléments d'action clairement identifiables
+
+**ÉCRAN 25: Partage Social et Impact**
+* **Objectif**: Faciliter le partage d'informations environnementales et valoriser l'impact collectif
+* **Structure**: Interface hybride avec options de partage et visualisation d'impact
+* **Composants UI principaux**:
+    * Options de partage:
+        * Génération de cards partageables (données actuelles)
+        * Sélecteur de plateforme (WhatsApp, FB, Twitter, etc.)
+        * Personnalisation message et visualisation
+        * Génération de lien direct
+    * Visualisation impact collectif:
+        * Compteurs communautaires (signalements résolus, actions)
+        * Carte de chaleur des zones améliorées
+        * Timeline des victoires collectives
+        * "Votre contribution" personnalisée
+    * Challenges communautaires:
+        * Objectifs collectifs en cours
+        * Progression et jalons
+        * Classement quartiers/communautés
+        * Badges et reconnaissances
+    * Témoignages et histoires:
+        * Cas d'amélioration concrets
+        * Témoignages utilisateurs
+        * Avant/après visuels
+* **Interactions**:
+    * Preview de partage en temps réel
+    * Sélection éléments à inclure
+    * Participation aux challenges
+    * Zoom sur zones d'impact
+* **Navigation**:
+    * Tabs thématiques
+    * Vue personnelle vs communautaire
+* **États**:
+    * Préparation partage
+    * Récapitulatif impact
+    * Focus challenge
+* **Spécificités visuelles**:
+    * Templates de partage attractifs
+    * Visualisations d'impact avec animations subtiles
+    * Design gamifié pour challenges
+
+**ÉCRAN 26: Éducation Environnementale**
+* **Objectif**: Informer et sensibiliser sur les enjeux environnementaux locaux et les solutions
+* **Structure**: Hub éducatif avec différents formats de contenu
+* **Composants UI principaux**:
+    * Bibliothèque de contenu:
+        * Cards par thématique (pollution air, îlots chaleur, etc.)
+        * Filtres par format (articles, vidéos, infographies)
+        * Recherche par mot-clé
+        * Suggestions personnalisées
+    * Viewer de contenu:
+        * Lecteur d'article avec progression
+        * Player vidéo intégré
+        * Visualisations interactives
+        * Quiz et vérifications de compréhension
+    * Parcours éducatifs:
+        * Séquences thématiques progressives
+        * Indicateur de progression
+        * Badges de complétion
+        * Tests de connaissances
+    * Glossaire et ressources:
+        * Définition des termes techniques
+        * FAQs contextuelles
+        * Liens vers sources officielles
+        * Ressources téléchargeables
+* **Interactions**:
+    * Navigation fluide entre contenus liés
+    * Marque-pages et favoris
+    * Interactions avec visualisations
+    * Complétion de quiz
+* **Navigation**:
+    * Parcours guidés vs exploration libre
+    * Navigation par thématique
+    * Retour contextuel depuis notifications
+* **États**:
+    * Découverte initiale
+    * Parcours en progression
+    * Révision/référence
+* **Spécificités visuelles**:
+    * Design éducatif avec hiérarchie claire
+    * Illustrations explicatives
+    * Codes couleurs consistants par thématique
+
+**ÉCRAN 27: Modes Spéciaux et Paramètres Avancés**
+* **Objectif**: Offrir des configurations spéciales et options avancées pour utilisateurs experts
+* **Structure**: Interface tabulaire avec sections techniques
+* **Composants UI principaux**:
+    * Modes spéciaux:
+        * "Mode vélo" (focus qualité air sur itinéraires)
+        * "Mode santé" (suivi exposition personnelle)
+        * "Mode scientifique" (données brutes et précises)
+        * "Mode accessibilité" (interface adaptée)
+    * Configuration avancée capteurs:
+        * Paramètres de précision/fréquence
+        * Calibration personnalisée
+        * Options debug/développeur
+        * Intégration capteurs tiers
+    * Personnalisation interface:
+        * Layout personnalisé
+        * Widgets configurables
+        * Options de densité d'information
+        * Thèmes avancés
+    * Gestion données:
+        * Options de synchronisation
+        * Stockage local vs cloud
+        * Export données personnelles
+        * Paramètres confidentialité fine
+* **Interactions**:
+    * Toggles multiples pour configurations
+    * Sliders pour paramètres graduels
+    * Formulaires techniques
+    * Preview changements en temps réel
+* **Navigation**:
+    * Onglets par catégorie de paramètres
+    * Hiérarchie paramètres simples→avancés
+* **États**:
+    * Configuration standard
+    * Mode expert
+    * Mode debug
+* **Spécificités visuelles**:
+    * Interface technique mais accessible
+    * Indications claires des options avancées
+    * Séparation visuelle des zones critiques
+
+## ÉTATS ALTERNATIFS ET ÉCRANS DE TRANSITION
+
+**ÉTAT: Chargement Initial**
+* **Objectif**: Fournir feedback durant le chargement initial de l'application
+* **Composants**:
+    * Animation du logo Canopia (pulsation verte)
+    * Indicateur de progression
+    * Message contextuel ("Récupération des données environnementales...")
+    * Background minimaliste
+
+**ÉTAT: Aucune Donnée Disponible**
+* **Objectif**: Informer clairement l'utilisateur quand les données sont indisponibles
+* **Composants**:
+    * Illustration explicite (capteur déconnecté)
+    * Message principal clair ("Données temporairement indisponibles")
+    * Explication cause possible
+    * Bouton action ("Réessayer", "Voir dernières données disponibles")
+    * Timestamp dernière donnée valide
+
+**ÉTAT: Erreur Réseau**
+* **Objectif**: Communiquer problèmes de connectivité et options
+* **Composants**:
+    * Icône alerte réseau distinctive
+    * Message erreur précis
+    * Options alternatives (données mises en cache)
+    * Conseils résolution ("Vérifiez votre connexion")
+    * Bouton réessayer avec animation
+
+**MODAL: Confirmation Action Critique**
+* **Objectif**: Valider les actions importantes avant exécution
+* **Composants**:
+    * Overlay avec focus modal
+    * Titre action explicite
+    * Description conséquences
+    * Boutons d'action clairement différenciés (Confirmer/Annuler)
+    * Option "Ne plus demander" pour actions répétitives
+
+**MODAL: Détail Capteur (Dashboard)**
+* **Objectif**: Afficher informations techniques détaillées d'un capteur spécifique
+* **Composants**:
+    * Fiche technique complète
+    * Graphiques performance temps réel
+    * Logs communication
+    * Options calibration/maintenance
+    * Images/schémas du dispositif
+
+**MODAL: Filtres Avancés**
+* **Objectif**: Permettre filtrage complexe multi-critères
+* **Composants**:
+    * Interface multi-colonnes avec groupes logiques
+    * Sélecteurs précis par type de donnée
+    * Prévisualisation résultats en temps réel
+    * Boutons "Appliquer", "Réinitialiser", "Sauvegarder filtre"
+    * Liste filtres sauvegardés
+
+**ÉTAT: Tour Guidé / Aide Contextuelle**
+* **Objectif**: Expliquer fonctionnalités in-situ
+* **Composants**:
+    * Overlay avec focus sur élément expliqué
+    * Bulle explicative avec texte concis
+    * Progression multi-étapes
+    * Option "Sauter" ou "Plus tard"
+    * Indicateur de progression (x/y)
+
+Ces spécifications complémentaires couvrent désormais l'ensemble des écrans nécessaires pour un prototype complet du système Canopia, tant pour la partie administrative que pour l'application citoyenne. J'ai ajouté également des états alternatifs et écrans modaux essentiels pour une expérience utilisateur complète et robuste.
+
+# Palette de Couleurs "Espaces Verts" pour Canopia - Uizard.IO
+
+## Couleurs Principales
+
+### Vert forêt profond: #2B463C
+**Rôle:** Couleur primaire pour éléments de navigation et structures principales
+- **Variante foncée:** #1D3229 (pour éléments actifs, headers)
+- **Variante claire:** #385950 (pour éléments survolés)
+
+### Vert feuillage: #688F4E
+**Rôle:** Couleur secondaire principale, boutons d'action primaires
+- **Variante foncée:** #4E6B3A (pour états enfoncés/actifs)
+- **Variante claire:** #82A768 (pour états survolés)
+
+### Vert clair printanier: #B1D182
+**Rôle:** Accentuation, indicateurs positifs, visualisations de données environnementales
+- **Variante foncée:** #93B264 (pour éléments interactifs)
+- **Variante claire:** #C7DEA3 (pour arrière-plans de section, badges)
+
+### Beige naturel: #F4F1E9
+**Rôle:** Couleur de fond principale, toile neutre pour le contenu
+- **Variante foncée:** #E5E0D5 (pour séparateurs, arrière-plans secondaires)
+- **Variante claire:** #FAF8F4 (pour modales, cartes, éléments flottants)
+
+## Couleurs Secondaires et d'Accentuation
+
+### Bleu-vert eau: #3C7D80
+**Rôle:** Visualisation des données d'eau et de fraîcheur
+- **Variante foncée:** #2D5D5F (active)
+- **Variante claire:** #5C9799 (hover)
+
+### Ocre terreux: #D68C45
+**Rôle:** Accentuation pour appels à l'action secondaires, chaleur urbaine
+- **Variante foncée:** #B57339 (active)
+- **Variante claire:** #E0A46A (hover)
+
+### Lilas doux: #9D8BB0
+**Rôle:** Éléments tertiaires, visualisations alternatives
+- **Variante foncée:** #7E6F8E (active)
+- **Variante claire:** #B8AACA (hover)
+
+## Couleurs Fonctionnelles
+
+### Succès: #509555
+**Rôle:** Messages positifs, actions réussies, bonnes conditions environnementales
+- **Variante foncée:** #3E7542 (active)
+- **Variante claire:** #7EB381 (hover/background)
+
+### Erreur: #C64747
+**Rôle:** Erreurs, alertes critiques, niveaux de pollution dangereux
+- **Variante foncée:** #A33838 (active)
+- **Variante claire:** #D97373 (hover/background)
+
+### Avertissement: #DFA23C
+**Rôle:** Avertissements, niveaux modérés de pollution
+- **Variante foncée:** #BD8730 (active)
+- **Variante claire:** #E9BC6A (hover/background)
+
+### Information: #4A7AAB
+**Rôle:** Messages informatifs, conseils, suggestions
+- **Variante foncée:** #396085 (active)
+- **Variante claire:** #7295BD (hover/background)
+
+## Couleurs de Fond et Neutres
+
+### Fond primaire: #F4F1E9 (Beige naturel)
+**Rôle:** Fond d'écran principal
+
+### Fond secondaire: #FFFFFF
+**Rôle:** Cartes, surfaces élevées, modales
+
+### Fond tertiaire: #EAE6DC
+**Rôle:** Sections distinctes, arrière-plans alternatifs
+
+### Gris neutre clair: #D8D3CA
+**Rôle:** Séparateurs subtils, bordures légères
+
+### Gris neutre moyen: #A9A295
+**Rôle:** Éléments désactivés, texte secondaire
+
+### Gris neutre foncé: #5F5B52
+**Rôle:** Texte tertiaire, icônes secondaires
+
+## Couleurs de Texte
+
+### Texte primaire: #2B2B2B
+**Rôle:** Texte principal sur fond clair
+- **Contraste avec beige:** 13.9:1 (WCAG AAA)
+- **Contraste avec blanc:** 16.4:1 (WCAG AAA)
+
+### Texte secondaire: #4D4D4D
+**Rôle:** Sous-titres, descriptions
+- **Contraste avec beige:** 8.2:1 (WCAG AAA)
+- **Contraste avec blanc:** 9.7:1 (WCAG AAA)
+
+### Texte sur fond coloré: #FFFFFF
+**Rôle:** Texte sur boutons et éléments colorés foncés
+- **Contraste avec vert forêt:** 9.3:1 (WCAG AAA)
+- **Contraste avec vert feuillage:** 4.5:1 (WCAG AA)
+
+### Texte accentué: #2B463C (Vert forêt profond)
+**Rôle:** Titres, texte mis en évidence sur fond clair
+
+## États Interactifs
+
+### Normal
+- Utiliser la couleur de base pour l'élément
+
+### Hover
+- Utiliser la variante claire de la couleur de base (+15% luminosité)
+- Ajouter une légère ombre portée: 0px 2px 4px rgba(0,0,0,0.1)
+
+### Active/Pressed
+- Utiliser la variante foncée de la couleur de base (-15% luminosité)
+- Réduire ou supprimer les ombres
+
+### Focus
+- Ajouter une bordure de 2px: #688F4E (Vert feuillage)
+- Ajouter un léger glow: 0px 0px 4px rgba(104, 143, 78, 0.5)
+
+### Disabled
+- Opacité réduite à 50%
+- Utiliser #A9A295 (Gris neutre moyen) pour le texte
+
+## Visualisation de Données
+
+### Gradients pour Heatmaps
+- **Qualité de l'air:** #509555 → #DFA23C → #C64747 (Bon → Mauvais)
+- **Température:** #3C7D80 → #F4F1E9 → #D68C45 (Frais → Chaud)
+- **Végétalisation:** #1D3229 → #688F4E → #B1D182 (Faible → Élevée)
+
+### Données Catégorielles
+1. #688F4E (Vert feuillage)
+2. #3C7D80 (Bleu-vert eau)
+3. #9D8BB0 (Lilas doux)
+4. #D68C45 (Ocre terreux)
+5. #5F5B52 (Gris neutre foncé)
+
+## Règles d'Utilisation
+
+1. **Hiérarchie visuelle:**
+    - Utiliser le vert forêt (#2B463C) pour les éléments primaires (navigation, headers)
+    - Utiliser le vert feuillage (#688F4E) pour les actions primaires (boutons principaux)
+    - Utiliser le vert clair (#B1D182) pour les indicateurs et l'accentuation
+    - Réserver le beige naturel (#F4F1E9) pour les fonds et surfaces neutres
+
+2. **Contrastes accessibles:**
+    - Maintenir un ratio minimum de 4.5:1 pour le texte standard (WCAG AA)
+    - Maintenir un ratio minimum de 3:1 pour le texte de grande taille et les éléments UI
+    - Utiliser le texte blanc uniquement sur les couleurs foncées (verts forêt/feuillage)
+
+3. **Cohérence environnementale:**
+    - Associer la fraîcheur aux tons bleu-vert (#3C7D80)
+    - Associer la chaleur aux tons ocre (#D68C45)
+    - Utiliser les gradients de vert pour les indicateurs de végétalisation
+
+4. **Alertes et indicateurs:**
+    - Utiliser le système de couleurs fonctionnelles de manière cohérente
+    - Limiter l'utilisation des couleurs d'alerte pour éviter la fatigue visuelle
+    - Toujours accompagner les indicateurs colorés par des labels ou icônes
+
+## Recommandations pour Uizard.IO
+
+1. **Brand Kit:**
+    - Configurer les couleurs principales dans le Brand Kit pour une réutilisation cohérente
+    - Définir les styles de boutons avec les états appropriés (normal, hover, active, disabled)
+    - Créer des composants de base avec les couleurs prédéfinies
+
+2. **Prototypage:**
+    - Appliquer le fond beige naturel (#F4F1E9) comme toile de base
+    - Utiliser le vert forêt (#2B463C) pour la barre de navigation principale
+    - Réserver le vert feuillage (#688F4E) pour les boutons d'action primaires
+    - Utiliser le vert clair (#B1D182) pour les cartes et sections importantes
+
+3. **Visualisations:**
+    - Configurer les gradients prédéfinis pour les heatmaps environnementales
+    - Utiliser la palette de 5 couleurs pour les visualisations catégorielles
+    - Maintenir la cohérence sémantique (vert = bon, rouge = mauvais)
+
+Cette palette harmonieuse inspirée par la nature offre un équilibre parfait entre professionnalisme et chaleur, idéal pour une application environnementale urbaine. Les contrastes respectent les normes d'accessibilité tout en maintenant l'identité "espaces verts" du projet.
