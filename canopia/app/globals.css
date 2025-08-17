@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Roboto+Mono&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 36 33% 94%;
+  --foreground: 0 0% 17%;
+
+  --primary: 150 24% 22%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 96 33% 43%;
+  --secondary-foreground: 0 0% 100%;
+
+  --accent: 84 47% 67%;
+  --accent-foreground: 150 24% 22%;
+
+  --muted: 34 10% 83%;
+  --muted-foreground: 0 0% 30%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 17%;
+
+  --border: 34 10% 83%;
+  --input: 34 10% 83%;
+
+  --success: 122 28% 45%;
+  --warning: 37 68% 55%;
+  --error: 0 48% 53%;
+  --info: 212 40% 48%;
+}
+
+.dark {
+  --background: 0 0% 17%;
+  --foreground: 36 33% 94%;
+
+  --primary: 150 24% 22%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 96 33% 43%;
+  --secondary-foreground: 0 0% 100%;
+
+  --accent: 84 47% 67%;
+  --accent-foreground: 150 24% 22%;
+
+  --muted: 0 0% 30%;
+  --muted-foreground: 34 10% 83%;
+
+  --card: 0 0% 20%;
+  --card-foreground: 36 33% 94%;
+
+  --border: 0 0% 30%;
+  --input: 0 0% 30%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-family: "Roboto", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.font-roboto-mono {
+  font-family: "Roboto Mono", monospace;
+}
+
